@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -20,17 +19,13 @@ public class BluetoothService {
     // Debugging
     private static final String TAG = "BluetoothService";
 
-    // Unique UUID for this application
     private static final UUID MY_UUID_SECURE =
             UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     private static final UUID MY_UUID_INSECURE =
             UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
-    private static final String SECURE_CHAT = "BluetoothChatSecure";
-    private static final String INSECURE_CHAT = "BluetoothChatInsecure";
-
     // Member fields
-    private final BluetoothAdapter mAdapter;
+    private final BluetoothAdapter bluetoothAdapter;
     private final Handler mHandler;
     private AcceptThread mSecureAcceptThread;
     private AcceptThread mInsecureAcceptThread;
@@ -46,7 +41,7 @@ public class BluetoothService {
     public static final int STATE_CONNECTED = 3;  // now connected to a remote device
 
     public BluetoothService(Context context, Handler handler) {
-        mAdapter = BluetoothAdapter.getDefaultAdapter();
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mState = STATE_NONE;
         mNewState = mState;
         mHandler = handler;
@@ -210,11 +205,9 @@ public class BluetoothService {
             // Create a new listening server socket
             try {
                 if (secure) {
-                    tmp = mAdapter.listenUsingRfcommWithServiceRecord(SECURE_CHAT,
-                            MY_UUID_SECURE);
+                    tmp = bluetoothAdapter.listenUsingRfcommWithServiceRecord("BluetoothChatSecure", MY_UUID_SECURE);
                 } else {
-                    tmp = mAdapter.listenUsingInsecureRfcommWithServiceRecord(
-                            INSECURE_CHAT, MY_UUID_INSECURE);
+                    tmp = bluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord("BluetoothChatInsecure", MY_UUID_INSECURE);
                 }
             } catch (IOException e) {
                 Log.e(TAG, "Socket Type: " + mSocketType + "listen() failed", e);
@@ -327,7 +320,7 @@ public class BluetoothService {
             setName("ConnectThread" + mSocketType);
 
             // Always cancel discovery because it will slow down a connection
-            mAdapter.cancelDiscovery();
+            bluetoothAdapter.cancelDiscovery();
 
             // Make a connection to the BluetoothSocket
             try {

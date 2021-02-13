@@ -11,18 +11,10 @@ public class GridMap {
 		}
 		return map;
 	}
-	
-	
-	private static GridPosition[] startGridPosition = {new GridPosition(0,0),new GridPosition(1,0),new GridPosition(2,0),new GridPosition(0,1),new GridPosition(1,1),new GridPosition(2,1),new GridPosition(0,2),new GridPosition(1,2),new GridPosition(2,2)};
-	private static GridPosition[] endGridPosition = {new GridPosition(14,19),new GridPosition(14,18),new GridPosition(14,17),new GridPosition(13,19),new GridPosition(13,18),new GridPosition(13,17),new GridPosition(12,19),new GridPosition(12,18),new GridPosition(12,17)};
-
-
 	private static int exploredTiles [][] = new int[20][15];
 	private static int obstacles [][] = new int[20][15];
 	private static String obstacleString = "";
-
 	private ArrayList<GridIDblock> numberedBlocks = new ArrayList<GridIDblock>();
-
 	public  int[][] getObstacles() {
 		return obstacles;
 	}
@@ -131,7 +123,6 @@ public class GridMap {
 		}
 	}
 
-
 	public String getBinaryExplored(){
 		String binaryExplored="11";
 		int exploredTile[][]= GridMap.getInstance().getExploredTiles();
@@ -163,9 +154,4 @@ public class GridMap {
 		}
 		return binaryExploredObstacle;
 	}
-
-	public String getObstacleStringFromAlgo() {
-		return obstacleString;
-	}
-
 }

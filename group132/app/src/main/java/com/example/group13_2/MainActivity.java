@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     Button btn_send_config1;
     Button btn_send_config2;
     Button btn_removeWp;
+    Button btn_explore;
+    Button btn_fastest_path;
+    Button btn_terminate_exploration;
     ImageButton joystick_left;
     ImageButton joystick_right;
     ImageButton joystick_forward;
@@ -57,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     String incoming_map_data = "MapData";
     String incoming_grid_layout = "Grid";
     String incoming_numbered_block = "NumberedBlock";
+    String incoming_move_forward = "Moving Forward";
+    String incoming_move_right = "Moving Right";
+    String incoming_move_left = "Moving Left";
     String move_up = "Robot|Up";
     String move_down = "Robot|Down";
     String move_left = "Robot|Left";
@@ -76,6 +82,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         set_robotPost = findViewById(R.id.set_robotPos);
         set_wp = findViewById(R.id.set_waypoint);
         btn_removeWp = findViewById(R.id.remove_waypoint);
+        btn_explore = findViewById(R.id.explore);
+        btn_fastest_path = findViewById(R.id.fastest_path);
+        btn_terminate_exploration = findViewById(R.id.terminate_exploration);
         autoUpdateRadio = findViewById(R.id.radioAuto);
         manualUpdateRadio = findViewById(R.id.radioManual);
         statusView = findViewById(R.id.status);
@@ -100,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setBtnListener();
         loadGrid();
         onClickTiltSwitch();
-
     }
 
     public void onClickTiltSwitch() {
@@ -242,19 +250,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
             else if (message[0].equals("S")) {
                 if (message[1].equals("F")) {
-                    updateStatus("Moving Forward");
+                    updateStatus(incoming_move_forward);
                 }
                 if (message[1].equals("TR")) {
-                    updateStatus("Turning Right");
+                    updateStatus(incoming_move_right);
                 }
                 if (message[1].equals("TL")) {
-                    updateStatus("Turning Left");
+                    updateStatus(incoming_move_left);
                 }
                 if (message[1].equals("FP")) {
                     updateStatus("Fastest Path");
                 }
                 if (message[1].equals("EX")) {
-                    updateStatus("Exploration");
+                    updateStatus("Exploring");
                 }
                 if (message[1].equals("DONE")) {
                     updateStatus("Done!");
@@ -422,14 +430,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         });
         joystick_left.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                RobotInstance.getInstance().rotateLeft();
+                RobotInstance.getInstance().moveLeft1(10);
+//                RobotInstance.getInstance().rotateLeft();
                 outgoingMessage(move_left, 1);
                 loadGrid();
             }
         });
         joystick_right.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                RobotInstance.getInstance().rotateRight();
+                RobotInstance.getInstance().moveRight1(10);
+//                RobotInstance.getInstance().rotateRight();
                 outgoingMessage(move_right, 1);
                 loadGrid();
             }
@@ -438,6 +448,32 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             public void onClick(View v) {
                 GridWayPoint.getInstance().setGridPosition(null);
                 loadGrid();
+            }
+        });
+        btn_fastest_path.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (GridWayPoint.waypoint.getGridPosition() == null) {
+                    updateStatus("Setting WayPoint");
+                    set_robotPost.setChecked(false);
+                    set_wp.setChecked(true);
+                    Toast toast=Toast.makeText(getApplicationContext(),"Tap the Grid to set WayPoint",Toast.LENGTH_LONG);
+                    toast.show();
+                }else{
+                    outgoingMessage("Begin Fastest Path", 0);
+                    updateStatus("Fastest Path");
+                }
+            }
+        });
+        btn_terminate_exploration.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                outgoingMessage("Terminate exploration", 0);
+                updateStatus("Terminated Exploration");
+            }
+        });
+        btn_explore.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                outgoingMessage("Begin exploration", 0);
+                updateStatus("Exploring");
             }
         });
     }

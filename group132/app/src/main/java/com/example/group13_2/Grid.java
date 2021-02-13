@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 import java.lang.Math;
+import 	android.util.Log;
 
 import java.util.ArrayList;
 
@@ -54,11 +55,11 @@ public class Grid extends View implements View.OnTouchListener {
         unexploredArea.setColor(Color.parseColor("#FF8C33"));
         waypoint.setColor(Color.parseColor("#FB0A53"));
         startEndPoint.setColor(Color.parseColor("#ffae62"));
-        numberedObstacle.setColor(Color.parseColor("#FF0000"));
+        numberedObstacle.setColor(Color.WHITE);
         numberedObstacle.setTypeface(Typeface.DEFAULT_BOLD);
 //        numberedObstacle.setLetterSpacing(-0.15f);
         numberedObstacle.setTextAlign(Paint.Align.CENTER);
-        numberedObstacle.setTextSize(30);
+        numberedObstacle.setTextSize(80);
 
         coords.setColor(Color.parseColor("#000000"));
 //        coords.setLetterSpacing(-0.05f);
@@ -190,15 +191,30 @@ public class Grid extends View implements View.OnTouchListener {
 
     private void drawNumberedBlocks(Canvas canvas) {
         //draw numbered blocks
-        int[][]obstacles = GridMap.getInstance().getObstacles();
+//        Log.e("abc","hello");
+//        int[][]obstacles = GridMap.getInstance().getObstacles();
+//        ArrayList<GridIDblock> numberedBlocks = GridMap.getInstance().getNumberedBlocks();
+//        for(GridIDblock block:numberedBlocks)
+//        {
+//            float posX =  (block.getGridPosition().getPosX()+0.5f) * cellWidth;
+//            float posY =  (20-block.getGridPosition().getPosY()) * cellHeight;
+//            Log.e("abc",Float.toString(posX));
+//            Log.e("abc",Float.toString(posY));
+//            Log.e("abc",block.getID());
+//            if(obstacles[block.getGridPosition().getPosY()][block.getGridPosition().getPosX()]==1) {
+//                canvas.drawText(block.getID(), posX, posY, numberedObstacle);
+//            }
+//        }
+
         ArrayList<GridIDblock> numberedBlocks = GridMap.getInstance().getNumberedBlocks();
-        for(GridIDblock block:numberedBlocks)
-        {
-            float posX =  (block.getGridPosition().getPosX()+0.5f) * cellWidth;
-            float posY =  (20-block.getGridPosition().getPosY()) * cellHeight;
-            if(obstacles[block.getGridPosition().getPosY()][block.getGridPosition().getPosX()]==1) {
-                canvas.drawText(block.getID(), posX, posY, numberedObstacle);
-            }
+        for(GridIDblock block:numberedBlocks) {
+//            GridPosition wp = GridWayPoint.getInstance().getGridPosition();
+            float posX =  (block.getGridPosition().getPosX()) * cellWidth;
+            float posY =  (19-block.getGridPosition().getPosY()) * cellHeight;
+            float textposX =  (block.getGridPosition().getPosX()+0.5f) * cellWidth;
+            float textposY =  (20-0.1f-block.getGridPosition().getPosY()) * cellHeight;
+            canvas.drawRect(posX, posY, posX + cellWidth, posY + cellHeight, obstacle);
+            canvas.drawText(block.getID(), textposX, textposY, numberedObstacle);
         }
     }
 

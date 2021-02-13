@@ -179,6 +179,32 @@ public class RobotInstance {
         }
     }
 
+    public void moveRight1(int distance) {
+        float moveX = ((distance / 10f));
+        if (getPosX() + moveX > 13) {
+            setPosX(13);
+        } else {
+            if (getPosX() + moveX < 1) {
+                setPosX(1);
+            } else {
+                setPosX(getPosX() + moveX);
+            }
+        }
+    }
+
+    public void moveLeft1(int distance) {
+        float moveX = ((distance / 10f));
+        if (getPosX() - moveX < 1) {
+            setPosX(1);
+        } else {
+            if (getPosX() - moveX > 13) {
+                setPosX(13);
+            } else {
+                setPosX(getPosX() - moveX);
+            }
+        }
+    }
+
     public float getDirection() {
         return direction;
     }

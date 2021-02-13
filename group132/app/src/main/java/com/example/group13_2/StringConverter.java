@@ -22,6 +22,5 @@ public class StringConverter {
 			obstacles += hexStr;
 		}
 		return obstacles;
-		//return new BigInteger(s, 2).toString(16);
 	}
 }
