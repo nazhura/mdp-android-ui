@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     Button btn_explore;
     Button btn_fastest_path;
     Button btn_terminate_exploration;
+    Button btn_update;
     ImageButton joystick_left;
     ImageButton joystick_right;
     ImageButton joystick_forward;
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         btn_terminate_exploration = findViewById(R.id.terminate_exploration);
         autoUpdateRadio = findViewById(R.id.radioAuto);
         manualUpdateRadio = findViewById(R.id.radioManual);
+        btn_update = findViewById(R.id.update);
         statusView = findViewById(R.id.status);
         gestureEnable = findViewById(R.id.gestureSwitch);
         tiltEnable = findViewById(R.id.tiltSwitch);
@@ -105,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             transaction.commit();
         }
 
+        btn_update.setEnabled(false);
         updateStatus(status);
         setBtnListener();
         loadGrid();
@@ -216,8 +219,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 message = readMsg.split("-");
             }
 
-            if (message[0].equals(incoming_grid_layout)) { //receive mapDescriptor from Algo
-                GridMap.getInstance().setMapJson(message[1]);
+            if (message[0].equals("{\"grid\" ")) { //receive mapDescriptor from Algo
+//                GridMap.getInstance().setMapJson(message[1]);
+//                if (autoUpdateRadio.isChecked()) {
+//                    loadGrid();
+//                }
+                String str = message[1].substring(2,77);
+                GridMap.getInstance().setMapJson(str);
                 if (autoUpdateRadio.isChecked()) {
                     loadGrid();
                 }
@@ -248,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     loadGrid();
                 }
             }
-            else if (message[0].equals("S")) {
+            else if (message[0].equals("Message")) {
                 if (message[1].equals("F")) {
                     updateStatus(incoming_move_forward);
                 }
@@ -430,16 +438,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         });
         joystick_left.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                RobotInstance.getInstance().moveLeft1(10);
-//                RobotInstance.getInstance().rotateLeft();
+//                RobotInstance.getInstance().moveLeft1(10);
+                RobotInstance.getInstance().rotateLeft();
                 outgoingMessage(move_left, 1);
                 loadGrid();
             }
         });
         joystick_right.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                RobotInstance.getInstance().moveRight1(10);
-//                RobotInstance.getInstance().rotateRight();
+//                RobotInstance.getInstance().moveRight1(10);
+                RobotInstance.getInstance().rotateRight();
                 outgoingMessage(move_right, 1);
                 loadGrid();
             }
@@ -476,19 +484,29 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 updateStatus("Exploring");
             }
         });
+        manualUpdateRadio.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                btn_update.setEnabled(true);
+            }
+        });
+        autoUpdateRadio.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                btn_update.setEnabled(false);
+            }
+        });
+        btn_update.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                loadGrid();
+            }
+        });
     }
 
     private void displayDataStrings(){
-
-        // create an alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("MDF + Image String");
-
-        // set the custom layout
+        builder.setTitle("Map Descriptor and Image Recognition String");
         final View customLayout = getLayoutInflater().inflate(R.layout.mdf_string, null);
-        builder.setView(customLayout);
 
-        // add a button
+        builder.setView(customLayout);
         builder.setPositiveButton("CLOSE", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -497,17 +515,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        // set the custom dialog components - text, image and button
-        EditText text_mdf1 = (EditText) customLayout.findViewById(R.id.textbox_mdf1);
+        EditText text_mdf1 = customLayout.findViewById(R.id.textbox_mdf1);
         String explored = StringConverter.binaryStringToHexadecimalString(GridMap.getInstance().getBinaryExplored());
         text_mdf1.setText(explored);
 
-        EditText text_mdf2 = (EditText) customLayout.findViewById(R.id.textbox_mdf2);
+        EditText text_mdf2 = customLayout.findViewById(R.id.textbox_mdf2);
         String obstacles = StringConverter.binaryStringToHexadecimalString(GridMap.getInstance().getBinaryExploredObstacle());
-        //obstacles = obstacles + ";" + Map.getInstance().getObstacleStringFromAlgo();
         text_mdf2.setText(obstacles);
 
-        EditText text_imgreg = (EditText) customLayout.findViewById(R.id.textbox_imgreg);
+        EditText text_imgreg = customLayout.findViewById(R.id.textbox_imgreg);
         String imgreg = "{";
         ArrayList<GridIDblock> numberedBlocks = GridMap.getInstance().getNumberedBlocks();
         for(GridIDblock blk : numberedBlocks){

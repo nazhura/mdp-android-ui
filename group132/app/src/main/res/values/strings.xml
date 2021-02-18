@@ -34,7 +34,8 @@
     <string name="set_config2">Configure String 2</string>
     <string name="config1_button">Config 1</string>
     <string name="config2_button">Config 2</string>
-    <string name="mdf_string_2_discovered_obstacles">MDF String 2: Discovered Obstacles</string>
-    <string name="mdf_string_1_explored_squares">MDF String 1: Explored Squares</string>
+    <string name="mdf_string_2_discovered_obstacles">Map Descriptor: Discovered Obstacles</string>
+    <string name="mdf_string_1_explored_squares">Map Descriptor: Explored Squares</string>
     <string name="image_recognition_string">Image Recognition String</string>
+    <string name="update">Update</string>
 </resources>
