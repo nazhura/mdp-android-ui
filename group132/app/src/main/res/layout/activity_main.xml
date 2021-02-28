@@ -90,8 +90,8 @@
 
     <Switch
         android:id="@+id/set_waypoint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="176dp"
+        android:layout_height="27dp"
         android:layout_marginStart="420dp"
         android:layout_marginTop="32dp"
         android:text="@string/set_waypoint"
@@ -111,15 +111,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--<Button
+    /*
+
+    */
+
+    <Button
         android:id="@+id/remove_waypoint"
         android:layout_width="167dp"
         android:layout_height="40dp"
         android:layout_marginStart="420dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="208dp"
         android:text="@string/remove_waypoint"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/set_robotPos" />-->
+        app:layout_constraintTop_toBottomOf="@+id/set_robotPos" />
+
+    <Button
+        android:id="@+id/config2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="352dp"
+        android:text="@string/config2_button"
+        app:layout_constraintStart_toEndOf="@+id/config1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/config1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="412dp"
+        android:layout_marginTop="352dp"
+        android:text="@string/config1_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/status_heading"
@@ -137,8 +161,8 @@
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="448dp"
-        android:layout_marginTop="584dp"
+        android:layout_marginStart="480dp"
+        android:layout_marginTop="736dp"
         android:maxWidth="150dp"
         android:text="Idle"
         android:textColor="#000000"
@@ -177,75 +201,61 @@
 
     <RadioGroup
         android:id="@+id/radioGroup"
-        android:layout_width="178dp"
-        android:layout_height="89dp"
-        android:layout_marginStart="416dp"
-        android:layout_marginTop="140dp"
+        android:layout_width="171dp"
+        android:layout_height="92dp"
+        android:layout_marginStart="420dp"
+        android:layout_marginTop="132dp"
         android:background="#77ACA2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <TextView
             android:id="@+id/header"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#F4E9CD"
-            android:text="MAP UPDATE" />
+            android:gravity="center"
+            android:text="MAP UPDATE"
+            android:textColor="#031926"
+            android:textSize="@dimen/font_size_medium" />
 
         <RadioButton
             android:id="@+id/radioAuto"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/auto_update"
-            android:textSize="@dimen/font_size_medium" />
+            android:textColor="#F4E9CD"
+            android:textSize="@dimen/font_size_small" />
 
         <RadioButton
             android:id="@+id/radioManual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/manual_update"
-            android:textSize="@dimen/font_size_medium" />
+            android:textColor="#F4E9CD"
+            android:textSize="@dimen/font_size_small" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/config1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="408dp"
-        android:layout_marginTop="280dp"
-        android:text="@string/config1_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/config2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="280dp"
-        android:text="@string/config2_button"
-        app:layout_constraintStart_toEndOf="@+id/config1"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Switch
-        android:id="@+id/gestureSwitch"
-        android:layout_width="148dp"
+        android:id="@+id/tiltSwitch"
+        android:layout_width="173dp"
         android:layout_height="27dp"
-        android:layout_marginStart="445dp"
-        android:layout_marginTop="396dp"
-        android:text="@string/gesture"
+        android:layout_marginStart="420dp"
+        android:layout_marginTop="244dp"
+        android:text="@string/tilt"
         android:textSize="@dimen/font_size_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
-        android:id="@+id/tiltSwitch"
-        android:layout_width="147dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="448dp"
-        android:layout_marginTop="352dp"
-        android:text="@string/tilt"
+        android:id="@+id/gestureSwitch"
+        android:layout_width="173dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="420dp"
+        android:layout_marginTop="272dp"
+        android:text="@string/gesture"
         android:textSize="@dimen/font_size_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
