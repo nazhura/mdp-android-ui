@@ -37,12 +37,12 @@
 
     <GridLayout
         android:id="@+id/base_layout"
-        android:layout_width="425dp"
-        android:layout_height="499dp"
+        android:layout_width="376dp"
+        android:layout_height="500dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_weight="5"
-        android:background="#031926"
+        android:background="#468189"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -55,8 +55,10 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/my_button_bg"
+        android:fontFamily="@font/share_tech_mono"
         android:text="@string/explore"
         android:textColor="#F4E9CD"
+        android:textSize="22dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/base_layout" />
 
@@ -68,7 +70,9 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/my_button_bg"
         android:text="@string/fastest_path"
+        android:fontFamily="@font/share_tech_mono"
         android:textColor="#F4E9CD"
+        android:textSize="22dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/explore" />
 
@@ -81,6 +85,8 @@
         android:background="@drawable/my_button_bg"
         android:text="@string/terminate_explore"
         android:textColor="#F4E9CD"
+        android:textSize="15dp"
+        android:fontFamily="@font/share_tech_mono"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -115,7 +121,7 @@
         android:id="@+id/leftJoystick"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginStart="392dp"
+        android:layout_marginStart="400dp"
         android:layout_marginTop="48dp"
         android:adjustViewBounds="true"
         android:background="@null"
@@ -131,10 +137,11 @@
         android:layout_marginStart="408dp"
         android:layout_marginTop="32dp"
         android:background="#77aca2"
-        android:paddingLeft="15dp"
+        android:paddingLeft="10dp"
         android:text="@string/set_waypoint"
         android:textColor="#F4E9CD"
-        android:textSize="13dp"
+        android:textSize="18dp"
+        android:fontFamily="@font/share_tech_mono"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -148,7 +155,8 @@
         android:paddingLeft="10dp"
         android:text="@string/tilt"
         android:textColor="#F4E9CD"
-        android:textSize="@dimen/font_size_small"
+        android:fontFamily="@font/share_tech_mono"
+        android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -159,6 +167,7 @@
         android:layout_marginStart="408dp"
         android:layout_marginTop="112dp"
         android:background="#77ACA2"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -170,8 +179,9 @@
             android:background="#F4E9CD"
             android:gravity="center"
             android:text="MAP UPDATE"
+            android:fontFamily="@font/share_tech_mono"
             android:textColor="#031926"
-            android:textSize="@dimen/font_size_medium" />
+            android:textSize="25dp" />
 
         <RadioButton
             android:id="@+id/radioAuto"
@@ -180,7 +190,8 @@
             android:checked="true"
             android:text="@string/auto_update"
             android:textColor="#F4E9CD"
-            android:textSize="@dimen/font_size_small" />
+            android:fontFamily="@font/share_tech_mono"
+            android:textSize="18dp" />
 
         <RadioButton
             android:id="@+id/radioManual"
@@ -188,7 +199,8 @@
             android:layout_height="wrap_content"
             android:text="@string/manual_update"
             android:textColor="#F4E9CD"
-            android:textSize="@dimen/font_size_small" />
+            android:fontFamily="@font/share_tech_mono"
+            android:textSize="18dp" />
     </RadioGroup>
 
     <Switch
@@ -201,7 +213,8 @@
         android:paddingLeft="10dp"
         android:text="@string/gesture"
         android:textColor="#F4E9CD"
-        android:textSize="@dimen/font_size_small"
+        android:fontFamily="@font/share_tech_mono"
+        android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -216,7 +229,8 @@
         android:paddingLeft="10dp"
         android:text="@string/set_robot_pos"
         android:textColor="#F4E9CD"
-        android:textSize="15dp"
+        android:textSize="18dp"
+        android:fontFamily="@font/share_tech_mono"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -250,26 +264,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/config2"
-        android:layout_width="36dp"
-        android:layout_height="2dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/config2_button"
-        app:layout_constraintStart_toEndOf="@+id/config1"
-        app:layout_constraintTop_toTopOf="parent" />
-
     /*
 
     */
+
+    <Button
+        android:id="@+id/config2"
+        android:layout_width="83dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="368dp"
+        android:text="@string/config2_button"
+        app:layout_constraintStart_toEndOf="@+id/config1"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/status_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="224dp"
-
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/share_tech_mono"
+        android:layout_marginTop="230dp"
         android:text="@string/status"
         android:textColor="#F4E9CD"
         android:textSize="@dimen/font_size_medium"
@@ -278,11 +293,11 @@
 
     <TextView
         android:id="@+id/status"
-        android:layout_width="120dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="308dp"
-        android:layout_marginTop="6dp"
-
+        android:layout_width="178dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="634dp"
+        android:fontFamily="@font/share_tech_mono"
         android:maxWidth="150dp"
         android:text="Idle"
         android:textColor="#F4E9CD"
