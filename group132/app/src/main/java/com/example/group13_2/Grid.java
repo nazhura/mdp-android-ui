@@ -48,20 +48,20 @@ public class Grid extends View implements View.OnTouchListener {
     public Grid(Context context) {
         super(context);
         separator.setColor(Color.parseColor("#F4E9CD"));
-        exploredArea.setColor(Color.parseColor("#c7b2bf"));
+        exploredArea.setColor(Color.parseColor("#f4e9cd"));
         obstacle.setColor(Color.parseColor("#468189"));
-        robot.setColor(Color.parseColor("#031926"));
+        robot.setColor(Color.parseColor("#424f4f"));
         robotEye.setColor((Color.parseColor("#77aca2")));
         unexploredArea.setColor(Color.parseColor("#9DBEBB"));
-        waypoint.setColor(Color.parseColor("#f4e9cd"));
-        startEndPoint.setColor(Color.parseColor("#ffae62"));
+        waypoint.setColor(Color.parseColor("#031926"));
+        startEndPoint.setColor(Color.parseColor("#77aca2"));
         numberedObstacle.setColor(Color.WHITE);
         numberedObstacle.setTypeface(Typeface.DEFAULT_BOLD);
 //        numberedObstacle.setLetterSpacing(-0.15f);
         numberedObstacle.setTextAlign(Paint.Align.CENTER);
         numberedObstacle.setTextSize(80);
 
-        coords.setColor(Color.parseColor("#f4e9cd"));
+        coords.setColor(Color.parseColor("#031926"));
 //        coords.setLetterSpacing(-0.05f);
         coords.setTextAlign(Paint.Align.CENTER);
         coords.setTextSize(15);
