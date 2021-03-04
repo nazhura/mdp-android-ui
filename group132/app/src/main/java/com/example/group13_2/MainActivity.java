@@ -219,16 +219,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 message = readMsg.split("-");
             }
 
-            if (message[0].equals("{\"grid\" ")) { //receive mapDescriptor from Algo
+            if (message[0].equals(incoming_grid_layout)) { //receive mapDescriptor from Algo
 //                GridMap.getInstance().setMapJson(message[1]);
 //                if (autoUpdateRadio.isChecked()) {
 //                    loadGrid();
 //                }
-                String str = message[1].substring(2,77);
-                GridMap.getInstance().setMapJson(str);
+                GridMap.getInstance().setOnlyP2(message[1]);
                 if (autoUpdateRadio.isChecked()) {
                     loadGrid();
                 }
+//                String str = message[1].substring(2,77);
+//                GridMap.getInstance().setMapJson(str);
+//                if (autoUpdateRadio.isChecked()) {
+//                    loadGrid();
+//                }
             } else if (message[0].equals(incoming_map_data)) { //receive full data string (P1, P2, robot pos) from Algo
                 String data[] = message[1].split(",");
 
@@ -256,24 +260,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     loadGrid();
                 }
             }
-            else if (message[0].equals("Message")) {
+            else if (message[0].equals("Msg")) {
                 if (message[1].equals("F")) {
                     updateStatus(incoming_move_forward);
                 }
-                if (message[1].equals("TR")) {
+                else if (message[1].equals("TR")) {
                     updateStatus(incoming_move_right);
                 }
-                if (message[1].equals("TL")) {
+                else if (message[1].equals("TL")) {
                     updateStatus(incoming_move_left);
                 }
-                if (message[1].equals("FP")) {
+                else if (message[1].equals("FP")) {
                     updateStatus("Fastest Path");
                 }
-                if (message[1].equals("EX")) {
+                else if (message[1].equals("EX")) {
                     updateStatus("Exploring");
                 }
-                if (message[1].equals("DONE")) {
+                else if (message[1].equals("DONE")) {
                     updateStatus("Done!");
+                }
+                else {
+                    updateStatus(message[1]);
                 }
             } else if (message[0].trim().equals("Y")) { //harmonize with algo
                 updateStatus("Moving");
@@ -298,9 +305,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //add delimiters
         // 0=algo/tcp, 1=ardu/serial
         if(destination == 0){
-            message = "0|" + message;
+            message = message+"\n";
         }else if(destination == 1){
-            message = "1|" + message;
+            message = message+"\n";
         }
         return chatUtil.sendMsg(message);
     }
@@ -467,20 +474,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     Toast toast=Toast.makeText(getApplicationContext(),"Tap the Grid to set WayPoint",Toast.LENGTH_LONG);
                     toast.show();
                 }else{
-                    outgoingMessage("Begin Fastest Path", 0);
+                    outgoingMessage("FP", 0);
                     updateStatus("Fastest Path");
                 }
             }
         });
         btn_terminate_exploration.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                outgoingMessage("Terminate exploration", 0);
+                outgoingMessage("TX", 0);
                 updateStatus("Terminated Exploration");
             }
         });
         btn_explore.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                outgoingMessage("Begin exploration", 0);
+                outgoingMessage("EX", 0);
                 updateStatus("Exploring");
             }
         });
