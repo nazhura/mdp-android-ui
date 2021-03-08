@@ -91,6 +91,63 @@ public class GridMap {
 		}
 	}
 
+	public void setOnlyP2( String exploredObstacleHex){
+		obstacleString = exploredObstacleHex;
+		String obstacleHex="";
+		String exploredTileHex="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
+		String exploredTileBinary = StringConverter.hexadecimalStringToBinaryString(exploredTileHex);
+		exploredTileBinary = exploredTileBinary.substring(2, exploredTileBinary.length()-2);
+
+		String obstacleBinary = StringConverter.hexadecimalStringToBinaryString(obstacleHex);
+		if(obstacleBinary.length()>0){
+			obstacleBinary =obstacleBinary.substring(2, obstacleBinary.length()-2);
+		}
+
+		String exploredObstacleBinary=null;
+		if(exploredObstacleHex!=null){
+			exploredObstacleBinary = StringConverter.hexadecimalStringToBinaryString(exploredObstacleHex);
+		}
+
+		int obstacleIndex=0;
+		for(int i =0;i<exploredTileBinary.length();i++){
+			char exploreBit = exploredTileBinary.charAt(i);
+			char obstacleBit = '0';
+			if(obstacleBinary.length()>0){
+				obstacleBit = obstacleBinary.charAt(i);
+			}
+			int y = (i-(i%15))/15;
+			int x = i%15;
+			exploredTiles[y][x]=0;
+			obstacles[y][x]=0;
+			if(obstacleBit=='1'){
+				obstacles[y][x]=1;
+			}
+			if(exploreBit=='1'){
+				exploredTiles[y][x]=1;
+				if(exploredObstacleBinary!=null){
+					char exploredObstacleBit = exploredObstacleBinary.charAt(obstacleIndex);
+
+					if(exploredObstacleBit=='1'){
+						obstacles[y][x]=1;
+					}
+				}
+				obstacleIndex++;
+			}
+
+			if((x==0&&y==0)||(x==1&&y==0)||(x==2&&y==0)||
+					(x==0&&y==1)||(x==1&&y==1)||(x==2&&y==1)||
+					(x==0&&y==2)||(x==1&&y==2)||(x==2&&y==2)){
+				obstacles[y][x]=0;
+			}
+
+			if((x==14&&y==19)||(x==13&&y==19)||(x==12&&y==19)||
+					(x==14&&y==18)||(x==13&&y==18)||(x==12&&y==18)||
+					(x==14&&y==17)||(x==13&&y==17)||(x==12&&y==17)){
+				obstacles[y][x]=0;
+			}
+		}
+	}
+
 	public void setMapJson(String obstacleHex){
 		String exploredTileHex="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
 

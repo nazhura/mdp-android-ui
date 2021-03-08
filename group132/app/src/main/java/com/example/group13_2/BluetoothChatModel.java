@@ -365,9 +365,14 @@ public class BluetoothChatModel extends Fragment {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    chatArrayAdapter.add("Raspberry Pi: " + readMessage);
-                    //READ MESSAGE AT MAIN ACTIVITY
-                    ((MainActivity)getActivity()).incomingMessage(readMessage);
+                    String lines[] = readMessage.split("\\r?\\n");
+                    for (String temp : lines) {
+                        if(temp != null && !temp.isEmpty()){
+                            chatArrayAdapter.add("Raspberry Pi: " + temp);
+                            //READ MESSAGE AT MAIN ACTIVITY
+                            ((MainActivity)getActivity()).incomingMessage(temp);
+                        }
+                    }
                     break;
                 case MessageConstants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
