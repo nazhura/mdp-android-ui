@@ -328,5 +328,19 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp" />
 
+    <Button
+        android:id="@+id/button_speak"
+        android:layout_width="179dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="408dp"
+        android:layout_marginTop="465dp"
+        android:background="@drawable/my_button_bg2"
+        android:text="Voice Commands"
+        android:textColor="#F4E9CD"
+        android:fontFamily="@font/share_tech_mono"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

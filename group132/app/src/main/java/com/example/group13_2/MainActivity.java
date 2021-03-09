@@ -8,6 +8,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,9 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentTransaction;
 import android.hardware.SensorEvent;
 import android.widget.Toast;
+
+import android.content.Intent;
+import android.speech.RecognizerIntent;
 
 import java.lang.Math;
 import java.util.ArrayList;
@@ -69,6 +73,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     String move_left = "Robot|Left";
     String move_right = "Robot|Right";
 
+    Button btn_speak;
+
+    public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         gestureEnable = findViewById(R.id.gestureSwitch);
         tiltEnable = findViewById(R.id.tiltSwitch);
         tiltChecked=false;
+        btn_speak = findViewById(R.id.button_speak);
 
         //DECLARING SENSOR MANAGER AND SENSOR TYPE
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -106,6 +115,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             transaction.replace(R.id.sample_content_fragment, chatUtil);
             transaction.commit();
         }
+
+        btn_speak.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                startVoiceRecognitionActivity();
+            }
+        });
 
         btn_update.setEnabled(false);
         updateStatus(status);
@@ -126,6 +143,56 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 }
             }
         });
+    }
+
+    public void startVoiceRecognitionActivity() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK) {
+
+            ArrayList matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+            if (matches.contains("forward")) {
+                if(!RobotInstance.getInstance().isOutOfBounds()) {
+                    RobotInstance.getInstance().moveForward(10);
+                    outgoingMessage(move_up, 1);
+                    loadGrid();
+                }
+            }
+            else if (matches.contains("right")){
+                RobotInstance.getInstance().rotateRight();
+                outgoingMessage(move_right, 1);
+                loadGrid();
+            }
+            else if (matches.contains("start")){
+                if (GridWayPoint.waypoint.getGridPosition() == null) {
+                    updateStatus("Setting WayPoint");
+                    set_robotPost.setChecked(false);
+                    set_wp.setChecked(true);
+                    Toast toast=Toast.makeText(getApplicationContext(),"Tap the Grid to set WayPoint",Toast.LENGTH_LONG);
+                    toast.show();
+                }else{
+                    outgoingMessage("FP", 0);
+                    updateStatus("Fastest Path");
+                }
+            }
+            else if (matches.contains("explore")){
+                outgoingMessage("EX", 0);
+                updateStatus("Exploring");
+            }
+            else if (matches.contains("terminate")){
+                outgoingMessage("TX", 0);
+                updateStatus("Terminated Exploration");
+            }
+        }
     }
 
     @Override
@@ -220,10 +287,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
 
             if (message[0].equals(incoming_grid_layout)) { //receive mapDescriptor from Algo
-//                GridMap.getInstance().setMapJson(message[1]);
-//                if (autoUpdateRadio.isChecked()) {
-//                    loadGrid();
-//                }
                 GridMap.getInstance().setOnlyP2(message[1]);
                 if (autoUpdateRadio.isChecked()) {
                     loadGrid();
@@ -298,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public boolean outgoingMessage(String message) {
-        return chatUtil.sendMsg("0|" + message);
+        return chatUtil.sendMsg(message);
     }
 
     public boolean outgoingMessage(String message, int destination) {
@@ -394,7 +457,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         base_layout.addView(mCustomDrawableView);
     }
 
-    public void onGridTapped(int posX, int posY) {
+    public void onGridTapped(final int posX, final int posY) {
         if(set_robotPost.isChecked()){
             RobotInstance r = RobotInstance.getInstance();
             r.setPosX(posX);
@@ -404,6 +467,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             set_robotPost.setChecked(false);
         }
         if(set_wp.isChecked()){
+//            new AlertDialog.Builder(this)
+//                    .setTitle("Confirm Waypoint")
+//                    .setMessage("Confirm Waypoint X:"+posX+" Waypoint Y:"+posY)
+//                    .setIcon(android.R.drawable.ic_dialog_alert)
+//                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int whichButton) {
+//                            GridPosition p = new GridPosition(posX,posY);
+//                            GridWayPoint.getInstance().setGridPosition(p);
+//                            outgoingMessage("WP:"+(int)posX+","+(int)posY, 0);
+//                            set_wp.setChecked(false);
+//                            loadGrid();
+//                        }})
+//                    .setNegativeButton("No", null).show();
             GridPosition p = new GridPosition(posX,posY);
             GridWayPoint.getInstance().setGridPosition(p);
             outgoingMessage("WP:"+(int)posX+","+(int)posY, 0);

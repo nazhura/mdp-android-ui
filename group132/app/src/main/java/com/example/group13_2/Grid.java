@@ -47,7 +47,7 @@ public class Grid extends View implements View.OnTouchListener {
 
     public Grid(Context context) {
         super(context);
-        separator.setColor(Color.parseColor("#F4E9CD"));
+        separator.setColor(Color.parseColor("#000000"));
         exploredArea.setColor(Color.parseColor("#f4e9cd"));
         obstacle.setColor(Color.parseColor("#468189"));
         robot.setColor(Color.parseColor("#424f4f"));
@@ -182,7 +182,7 @@ public class Grid extends View implements View.OnTouchListener {
         }
         //drawlines for grids, horizontal and vertical
         for(int i = 0;i<16;i++){
-            canvas.drawLine((float)i*(w/15f)+ paddingX, paddingY, i*(w/15f)+ paddingX, paddingY +h, separator);
+            canvas.drawLine(i*(w/15f)+ paddingX, paddingY, i*(w/15f)+ paddingX, paddingY +h, separator);
         }
         for(int i = 0;i<21;i++){
             canvas.drawLine(paddingX, i*(h/20f)+ paddingY, paddingX +w,i*(h/20f)+ paddingY, separator);
