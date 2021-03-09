@@ -94,9 +94,9 @@
         android:id="@+id/forwardJoystick"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginStart="460dp"
+        android:layout_marginStart="462dp"
 
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:adjustViewBounds="true"
         android:background="@null"
         android:scaleType="fitCenter"
@@ -243,11 +243,11 @@
         android:layout_width="86dp"
         android:layout_height="32dp"
         android:layout_marginStart="408dp"
-        android:layout_marginTop="352dp"
+        android:layout_marginTop="348dp"
         android:background="@drawable/my_button_bg2"
+        android:fontFamily="@font/share_tech_mono"
         android:text="@string/config1_button"
         android:textColor="#F4E9CD"
-        android:fontFamily="@font/share_tech_mono"
         android:textSize="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -257,11 +257,11 @@
         android:layout_width="86dp"
         android:layout_height="32dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="352dp"
+        android:layout_marginTop="348dp"
         android:background="@drawable/my_button_bg2"
+        android:fontFamily="@font/share_tech_mono"
         android:text="@string/config2_button"
         android:textColor="#F4E9CD"
-        android:fontFamily="@font/share_tech_mono"
         android:textSize="15dp"
         app:layout_constraintStart_toEndOf="@+id/config1"
         app:layout_constraintTop_toTopOf="parent" />
@@ -285,11 +285,25 @@
         android:layout_width="179dp"
         android:layout_height="46dp"
         android:layout_marginStart="408dp"
-        android:layout_marginTop="416dp"
+        android:layout_marginTop="404dp"
         android:background="@drawable/my_button_bg2"
+        android:fontFamily="@font/share_tech_mono"
         android:text="@string/update"
         android:textColor="#F4E9CD"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_speak"
+        android:layout_width="179dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="408dp"
+        android:layout_marginTop="456dp"
+        android:background="@drawable/my_button_bg2"
         android:fontFamily="@font/share_tech_mono"
+        android:text="Voice Commands"
+        android:textColor="#F4E9CD"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -312,7 +326,7 @@
         android:layout_width="178dp"
         android:layout_height="26dp"
         android:layout_marginStart="104dp"
-        android:layout_marginTop="632dp"
+        android:layout_marginTop="628dp"
         android:fontFamily="@font/share_tech_mono"
         android:maxWidth="150dp"
         android:text="Idle"
@@ -327,20 +341,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp" />
-
-    <Button
-        android:id="@+id/button_speak"
-        android:layout_width="179dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="408dp"
-        android:layout_marginTop="465dp"
-        android:background="@drawable/my_button_bg2"
-        android:text="Voice Commands"
-        android:textColor="#F4E9CD"
-        android:fontFamily="@font/share_tech_mono"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

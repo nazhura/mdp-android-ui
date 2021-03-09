@@ -48,11 +48,11 @@ public class Grid extends View implements View.OnTouchListener {
     public Grid(Context context) {
         super(context);
         separator.setColor(Color.parseColor("#000000"));
-        exploredArea.setColor(Color.parseColor("#f4e9cd"));
+        exploredArea.setColor(Color.parseColor("#9DBEBB"));
         obstacle.setColor(Color.parseColor("#468189"));
         robot.setColor(Color.parseColor("#424f4f"));
         robotEye.setColor((Color.parseColor("#77aca2")));
-        unexploredArea.setColor(Color.parseColor("#9DBEBB"));
+        unexploredArea.setColor(Color.parseColor("#f4e9cd"));
         waypoint.setColor(Color.parseColor("#031926"));
         startEndPoint.setColor(Color.parseColor("#77aca2"));
         numberedObstacle.setColor(Color.WHITE);
