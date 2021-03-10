@@ -8,7 +8,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     MenuItem menu_set_config1;
     MenuItem menu_set_config2;
     MenuItem menu_display_string;
+    MenuItem voice_option;
     Button btn_send_config1;
     Button btn_send_config2;
     Button btn_removeWp;
@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     String move_left = "Robot|Left";
     String move_right = "Robot|Right";
 
-    Button btn_speak;
-
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
 
     @Override
@@ -101,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         gestureEnable = findViewById(R.id.gestureSwitch);
         tiltEnable = findViewById(R.id.tiltSwitch);
         tiltChecked=false;
-        btn_speak = findViewById(R.id.button_speak);
 
         //DECLARING SENSOR MANAGER AND SENSOR TYPE
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -115,14 +112,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             transaction.replace(R.id.sample_content_fragment, chatUtil);
             transaction.commit();
         }
-
-        btn_speak.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                startVoiceRecognitionActivity();
-            }
-        });
 
         btn_update.setEnabled(false);
         updateStatus(status);
@@ -389,6 +378,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         menu_set_config1 = menu.findItem(R.id.action_set_config_string1);
         menu_set_config2 = menu.findItem(R.id.action_set_config_string2);
         menu_display_string = menu.findItem(R.id.action_view_data_strings);
+        voice_option = menu.findItem(R.id.voice_btn);
         return true;
     }
 
@@ -415,6 +405,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (id == R.id.action_view_data_strings) {
             displayDataStrings();
             return true;
+        }
+        if (id == R.id.voice_btn) {
+            startVoiceRecognitionActivity();
         }
         return super.onOptionsItemSelected(item);
     }

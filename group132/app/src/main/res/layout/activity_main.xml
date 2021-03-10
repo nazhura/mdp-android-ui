@@ -294,20 +294,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_speak"
-        android:layout_width="179dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="408dp"
-        android:layout_marginTop="456dp"
-        android:background="@drawable/my_button_bg2"
-        android:fontFamily="@font/share_tech_mono"
-        android:text="Voice Commands"
-        android:textColor="#F4E9CD"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/status_heading"
         android:layout_width="wrap_content"
