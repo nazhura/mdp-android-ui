@@ -25,6 +25,15 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/voice_btn"
+        android:checkable="true"
+        android:checked="false"
+        android:icon="@drawable/voice"
+        android:orderInCategory="100"
+        android:title="@string/message"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/action_set_config_string1"
         android:orderInCategory="100"
         android:title="@string/set_config1"
