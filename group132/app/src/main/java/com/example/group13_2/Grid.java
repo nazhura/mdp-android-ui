@@ -10,12 +10,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 import java.lang.Math;
-import 	android.util.Log;
 
 import java.util.ArrayList;
 
 public class Grid extends View implements View.OnTouchListener {
-    final float scale = getResources().getDisplayMetrics().density;
 
     Paint separator = new Paint();      //Horizontal and vertical lines on Grid
     Paint startEndPoint = new Paint();  //Start and End points
@@ -57,15 +55,11 @@ public class Grid extends View implements View.OnTouchListener {
         startEndPoint.setColor(Color.parseColor("#77aca2"));
         numberedObstacle.setColor(Color.WHITE);
         numberedObstacle.setTypeface(Typeface.DEFAULT_BOLD);
-//        numberedObstacle.setLetterSpacing(-0.15f);
         numberedObstacle.setTextAlign(Paint.Align.CENTER);
         numberedObstacle.setTextSize(80);
-
         coords.setColor(Color.parseColor("#031926"));
-//        coords.setLetterSpacing(-0.05f);
         coords.setTextAlign(Paint.Align.CENTER);
         coords.setTextSize(15);
-
     }
 
     public void setGesture(Context context){
@@ -86,7 +80,6 @@ public class Grid extends View implements View.OnTouchListener {
             h= w/15f*20f;
         }
 
-//        paddingX = (this.getWidth()-w)/2f;
         cellWidth = w/15f;
         cellHeight = h/20f;
 
@@ -130,7 +123,6 @@ public class Grid extends View implements View.OnTouchListener {
         float xCenterPosition = r.getPosX()*cellWidth+ paddingX  +(cellWidth/2f);
         float yCenterPosition = (19f-r.getPosY())*cellWidth+ paddingY  +(cellHeight/2f);
         canvas.drawRect((paddingX+r.getPosX()*cellWidth)-cellWidth, (paddingY+(19-r.getPosY())*cellHeight)-cellWidth, (paddingX+r.getPosX()*cellWidth)+(2*cellWidth), (paddingY+(19-r.getPosY())*cellHeight)+(2*cellWidth), robot);
-//        canvas.drawCircle(xCenterPosition, yCenterPosition,cellWidth*1.3f, robot);
 
         //draw the front of the robot
         float direction = r.getDirection();
@@ -190,25 +182,8 @@ public class Grid extends View implements View.OnTouchListener {
     }
 
     private void drawNumberedBlocks(Canvas canvas) {
-        //draw numbered blocks
-//        Log.e("abc","hello");
-//        int[][]obstacles = GridMap.getInstance().getObstacles();
-//        ArrayList<GridIDblock> numberedBlocks = GridMap.getInstance().getNumberedBlocks();
-//        for(GridIDblock block:numberedBlocks)
-//        {
-//            float posX =  (block.getGridPosition().getPosX()+0.5f) * cellWidth;
-//            float posY =  (20-block.getGridPosition().getPosY()) * cellHeight;
-//            Log.e("abc",Float.toString(posX));
-//            Log.e("abc",Float.toString(posY));
-//            Log.e("abc",block.getID());
-//            if(obstacles[block.getGridPosition().getPosY()][block.getGridPosition().getPosX()]==1) {
-//                canvas.drawText(block.getID(), posX, posY, numberedObstacle);
-//            }
-//        }
-
         ArrayList<GridIDblock> numberedBlocks = GridMap.getInstance().getNumberedBlocks();
         for(GridIDblock block:numberedBlocks) {
-//            GridPosition wp = GridWayPoint.getInstance().getGridPosition();
             float posX =  (block.getGridPosition().getPosX()) * cellWidth;
             float posY =  (19-block.getGridPosition().getPosY()) * cellHeight;
             float textposX =  (block.getGridPosition().getPosX()+0.5f) * cellWidth;
@@ -263,7 +238,6 @@ public class Grid extends View implements View.OnTouchListener {
         return true;
     }
 
-    //Show toast
 
     public void showToast(String text) {
         Context context = getContext();
