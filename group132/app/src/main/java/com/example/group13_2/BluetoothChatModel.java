@@ -76,7 +76,6 @@ public class BluetoothChatModel extends Fragment {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     1234);
         }
-        // permissions granted in else
 
     }
 
@@ -84,8 +83,6 @@ public class BluetoothChatModel extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        // If BT is not on, request that it be enabled.
-        // setupChat() will then be called during onActivityResult
         if (!bluetoothAdapter.isEnabled()) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, requestEnableBluetooth);
@@ -106,10 +103,6 @@ public class BluetoothChatModel extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        // Performing this check in onResume() covers the case in which BT was
-        // not enabled during onStart(), so we were paused to enable it...
-        // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
         if (bluetoothService != null) {
             // Only if the state is STATE_NONE, do we know that we haven't started already
             if (bluetoothService.getState() == BluetoothService.STATE_NONE) {
@@ -167,11 +160,6 @@ public class BluetoothChatModel extends Fragment {
         }
     }
 
-
-
-    /**
-     * Set up the UI and background operations for chat.
-     */
     private void setupChat() {
         chatArrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.chat);
         chatView.setAdapter(chatArrayAdapter);
@@ -197,8 +185,6 @@ public class BluetoothChatModel extends Fragment {
                         .setCancelable(false)
                         .setNegativeButton("Done",new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
-                                // if this button is clicked, just close
-                                // the dialog box and do nothing
                                 dialog.cancel();
                             }
                         });
@@ -244,9 +230,6 @@ public class BluetoothChatModel extends Fragment {
         outMessageBuffer = new StringBuffer("");
     }
 
-    /**
-     * Makes this device discoverable for 300 seconds (5 minutes).
-     */
     private void makeDiscoverable() {
         if (bluetoothAdapter.getScanMode() !=
                 BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
@@ -256,11 +239,6 @@ public class BluetoothChatModel extends Fragment {
         }
     }
 
-    /**
-     * Sends a chat.
-     *
-     * @param message A string of text to send.
-     */
     protected boolean sendMessage(String message) {
         // Check that we're actually connected before trying anything
         if (bluetoothService.getState() != BluetoothService.STATE_CONNECTED) {
@@ -283,9 +261,6 @@ public class BluetoothChatModel extends Fragment {
         return true;
     }
 
-    /**
-     * The action listener for the EditText widget, to listen for the return key
-     */
     private TextView.OnEditorActionListener mWriteListener
             = new TextView.OnEditorActionListener() {
         public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
@@ -298,11 +273,6 @@ public class BluetoothChatModel extends Fragment {
         }
     };
 
-    /**
-     * Updates the status on the action bar.
-     *
-     * @param resId a string resource ID
-     */
     private void setStatus(int resId) {
         FragmentActivity activity = getActivity();
         if (null == activity) {
@@ -315,11 +285,6 @@ public class BluetoothChatModel extends Fragment {
         actionBar.setSubtitle(resId);
     }
 
-    /**
-     * Updates the status on the action bar.
-     *
-     * @param subTitle status
-     */
     private void setStatus(CharSequence subTitle) {
         FragmentActivity activity = getActivity();
         if (null == activity) {
@@ -332,9 +297,6 @@ public class BluetoothChatModel extends Fragment {
         actionBar.setSubtitle(subTitle);
     }
 
-    /**
-     * The Handler that gets information back from the BluetoothChatService
-     */
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

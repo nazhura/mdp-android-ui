@@ -24,14 +24,26 @@ public class GridMap {
 	public ArrayList<GridIDblock> getNumberedBlocks() { return numberedBlocks; }
 
 	public void addNumberedBlocks(GridIDblock block) {
+
+		int x = Math.min(block.getGridPosition().getPosX(),14);
+		int y = Math.min(block.getGridPosition().getPosY(),19);
+		x = Math.max(0,x);
+		y = Math.max(0,y);
+		block = new GridIDblock(block.getID(),x,y);
+
 		for (GridIDblock nb:numberedBlocks) {
-			//override me
-			if(nb.getGridPosition().equals(block.getGridPosition())){
+			if(nb.getGridPosition().equals(block.getGridPosition()) || nb.getID().equals(block.getID())){
 				numberedBlocks.remove(nb);
 				break;
 			}
 		}
+
+
 		numberedBlocks.add(block);
+	}
+
+	public void clearNumberedBlocks() {
+		numberedBlocks.clear();
 	}
 
 	//in hexdecimal, from map descriptor file to arrays

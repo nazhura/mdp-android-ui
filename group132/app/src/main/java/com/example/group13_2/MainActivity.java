@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     Button btn_fastest_path;
     Button btn_terminate_exploration;
     Button btn_update;
+    Button reset_button;
     ImageButton joystick_left;
     ImageButton joystick_right;
     ImageButton joystick_forward;
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         btn_explore = findViewById(R.id.explore);
         btn_fastest_path = findViewById(R.id.fastest_path);
         btn_terminate_exploration = findViewById(R.id.terminate_exploration);
+        reset_button = findViewById(R.id.reset);
         autoUpdateRadio = findViewById(R.id.radioAuto);
         manualUpdateRadio = findViewById(R.id.radioManual);
         btn_update = findViewById(R.id.update);
@@ -161,6 +163,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 outgoingMessage(move_right, 1);
                 loadGrid();
             }
+            else if (matches.contains("left")){
+                RobotInstance.getInstance().rotateLeft();
+                outgoingMessage(move_left, 1);
+                loadGrid();
+            }
             else if (matches.contains("start")){
                 if (GridWayPoint.waypoint.getGridPosition() == null) {
                     updateStatus("Setting WayPoint");
@@ -176,6 +183,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             else if (matches.contains("explore")){
                 outgoingMessage("EX", 0);
                 updateStatus("Exploring");
+            }
+            else if (matches.contains("image")){
+                outgoingMessage("IR", 0);
+                updateStatus("Image Recognition");
             }
             else if (matches.contains("terminate")){
                 outgoingMessage("TX", 0);
@@ -280,11 +291,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 if (autoUpdateRadio.isChecked()) {
                     loadGrid();
                 }
-//                String str = message[1].substring(2,77);
-//                GridMap.getInstance().setMapJson(str);
-//                if (autoUpdateRadio.isChecked()) {
-//                    loadGrid();
-//                }
             } else if (message[0].equals(incoming_map_data)) { //receive full data string (P1, P2, robot pos) from Algo
                 String data[] = message[1].split(",");
 
@@ -456,28 +462,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             r.setPosX(posX);
             r.setPosY(posY);
             r.setDirection("NORTH");
-            outgoingMessage("START:"+(int)posX+","+(int)posY, 0);
+            outgoingMessage("START:"+posX+","+posY, 0);
             set_robotPost.setChecked(false);
         }
         if(set_wp.isChecked()){
-//            new AlertDialog.Builder(this)
-//                    .setTitle("Confirm Waypoint")
-//                    .setMessage("Confirm Waypoint X:"+posX+" Waypoint Y:"+posY)
-//                    .setIcon(android.R.drawable.ic_dialog_alert)
-//                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int whichButton) {
-//                            GridPosition p = new GridPosition(posX,posY);
-//                            GridWayPoint.getInstance().setGridPosition(p);
-//                            outgoingMessage("WP:"+(int)posX+","+(int)posY, 0);
-//                            set_wp.setChecked(false);
-//                            loadGrid();
-//                        }})
-//                    .setNegativeButton("No", null).show();
             GridPosition p = new GridPosition(posX,posY);
             GridWayPoint.getInstance().setGridPosition(p);
-            outgoingMessage("WP:"+(int)posX+","+(int)posY, 0);
+            outgoingMessage("WP:"+posX+","+posY, 0);
             set_wp.setChecked(false);
         }
         loadGrid();
@@ -516,7 +507,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         });
         joystick_left.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                RobotInstance.getInstance().moveLeft1(10);
                 RobotInstance.getInstance().rotateLeft();
                 outgoingMessage(move_left, 1);
                 loadGrid();
@@ -524,7 +514,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         });
         joystick_right.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                RobotInstance.getInstance().moveRight1(10);
                 RobotInstance.getInstance().rotateRight();
                 outgoingMessage(move_right, 1);
                 loadGrid();
@@ -562,6 +551,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 updateStatus("Exploring");
             }
         });
+        reset_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                updateStatus("Reset Map");
+                final RobotInstance r = RobotInstance.getInstance();
+                GridMap.getInstance().setMap(
+                        "0000000000000000000000000000000000000000000000000000000000000000000000000000",
+                        "",
+                        "0000000000000000000000000000000000000000000000000000000000000000000000000000");
+                r.setPosX(Float.parseFloat("1"));
+                r.setPosY(Float.parseFloat("1"));
+                r.setDirection("NORTH");
+                GridMap.getInstance().clearNumberedBlocks();
+                loadGrid();
+
+            }
+        });
         manualUpdateRadio.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 btn_update.setEnabled(true);
@@ -577,6 +582,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 loadGrid();
             }
         });
+
     }
 
     private void displayDataStrings(){

@@ -16,7 +16,7 @@ import java.util.UUID;
 
 
 public class BluetoothService {
-    // Debugging
+
     private static final String TAG = "BluetoothService";
 
     private static final UUID MY_UUID_SECURE =
